@@ -1,0 +1,6 @@
+{
+  "name": "SpendFlow",
+  "description": "Professional budget & expense tracker with automated monthly recurring logs, data visualization analytics, and subscription model.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,89 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with subscription tier and preference settings",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "subscriptionTier": { "type": "string", "enum": ["free", "pro_monthly", "pro_annual", "pro_lifetime"] },
+        "isPro": { "type": "boolean" },
+        "subscriptionExpiryDate": { "type": "number" },
+        "currency": { "type": "string" },
+        "monthlyIncome": { "type": "number" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["userId", "subscriptionTier", "isPro"]
+    },
+    "Expense": {
+      "title": "Expense",
+      "description": "Individual transaction or expense record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "amount": { "type": "number" },
+        "category": { "type": "string" },
+        "timestamp": { "type": "number" },
+        "note": { "type": "string" },
+        "isRecurring": { "type": "boolean" },
+        "recurringRuleId": { "type": "string" }
+      },
+      "required": ["id", "userId", "title", "amount", "category", "timestamp"]
+    },
+    "RecurringExpense": {
+      "title": "RecurringExpense",
+      "description": "Subscription or recurring bill definition for automated monthly logging",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "amount": { "type": "number" },
+        "category": { "type": "string" },
+        "frequency": { "type": "string", "enum": ["weekly", "monthly", "yearly"] },
+        "billingDay": { "type": "number" },
+        "startDate": { "type": "number" },
+        "nextDueDate": { "type": "number" },
+        "lastProcessedDate": { "type": "number" },
+        "isActive": { "type": "boolean" },
+        "iconName": { "type": "string" }
+      },
+      "required": ["id", "userId", "title", "amount", "category", "frequency", "billingDay", "isActive"]
+    },
+    "BudgetGoal": {
+      "title": "BudgetGoal",
+      "description": "Monthly category spending target and limit",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "category": { "type": "string" },
+        "monthlyLimit": { "type": "number" },
+        "monthYear": { "type": "string" }
+      },
+      "required": ["id", "userId", "category", "monthlyLimit", "monthYear"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile with plan details and preferences"
+    },
+    "/users/{userId}/expenses/{expenseId}": {
+      "schema": "Expense",
+      "description": "Expense entries recorded by user or automated recurrences"
+    },
+    "/users/{userId}/recurring_expenses/{recurringId}": {
+      "schema": "RecurringExpense",
+      "description": "Recurring expenses and subscriptions managed for automated logging"
+    },
+    "/users/{userId}/budget_goals/{goalId}": {
+      "schema": "BudgetGoal",
+      "description": "Category budget limits"
+    }
+  }
+}
